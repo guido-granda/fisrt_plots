@@ -1,0 +1,11 @@
+dustfile = Data/dust/dust_MW_hz1.0.dat
+emdustfile = 0
+rfacburst = 1.0
+fcloud = 0.25
+tesc_disk = 0.001
+tesc_burst = 0.001
+upsilon2 = 1
+lambda_break_disk = 1e4
+beta2_disk = 2.0
+lambda_break_burst = 100
+beta2_burst = 1.6

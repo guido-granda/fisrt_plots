@@ -1,0 +1,8 @@
+# NLINE=    4
+# dustfile= Data/dust/dust_MW_hz1.0.dat    emdustfile= 0 rfacburst=  1.0000E+00 fcloud=  2.5000E-01 tesc_disk=  1.0000E-03 tesc_burst=  1.0000E-03
+#
+#
+#
+# (L_line/V)/(10^40 h erg/s/Mpc^3): (without/with dust)
+#          Lyalpha                 Halpha                  Hbeta                   OII3727             
+  1.9200E+01  4.8268E+00  2.4421E+00  9.4448E-01  8.2226E-01  2.9028E-01  1.3257E+00  4.6284E-01

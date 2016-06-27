@@ -1,0 +1,243 @@
+#
+# Galform code version information
+#
+iversion = [  2,  6,  0,472]
+branchname = 
+full_revision_name = stable
+compiled_by = guido <guido.granda@icrar.org>
+compiled_time = lun jun  6 08:39:12 UTC 2016
+#
+# Maximum number of trees in any mass interval
+#
+ntreemax =      1
+#
+# Actual output redshifts
+#
+zout_act = [ \ 
+     2.004 ]
+#
+# Details of the filters used in the run:
+#
+#  1 = UA  1500A (1350-1650A) top-hat filter           
+# A0-AB offset:     -2.500 0 =Rest Frame
+# lambda_eff=   1.4900E+03
+#  2 = UC  COMBO-17 2800A (2600-3000A) top-hat filter  
+# A0-AB offset:     -1.546 0 =Rest Frame
+# lambda_eff=   2.7905E+03
+#  3 = U RGO U                                         
+# A0-AB offset:     -0.903 0 =Rest Frame
+# lambda_eff=   3.5069E+03
+#  4 = B  RGO CCD B                                    
+# A0-AB offset:      0.117 0 =Rest Frame
+# lambda_eff=   4.3691E+03
+#  5 = V  RGO CCD V                                    
+# A0-AB offset:      0.008 0 =Rest Frame
+# lambda_eff=   5.4038E+03
+#  6 = R  RGO CCD R(Kron-Cousins)                      
+# A0-AB offset:     -0.226 0 =Rest Frame
+# lambda_eff=   6.6557E+03
+#  7 = I  RGO CCD I(Kron-Cousins)                      
+# A0-AB offset:     -0.430 0 =Rest Frame
+# lambda_eff=   8.1017E+03
+#  8 = J  UKIRT  J filter                              
+# A0-AB offset:     -0.885 0 =Rest Frame
+# lambda_eff=   1.2297E+04
+#  9 = H  UKIRT H filter                               
+# A0-AB offset:     -1.386 0 =Rest Frame
+# lambda_eff=   1.6533E+04
+# 10 = K  UKIRT K filter                               
+# A0-AB offset:     -1.870 0 =Rest Frame
+# lambda_eff=   2.1968E+04
+# 11 = BJ Couch and Newell (80) BJ (photographic) fi   
+# A0-AB offset:      0.089 0 =Rest Frame
+# lambda_eff=   4.4815E+03
+# 12 = uS  SDSS u standard (filter+CCD +1.3 air mass)  
+# A0-AB offset:     -0.910 0 =Rest Frame
+# lambda_eff=   3.5513E+03
+# 13 = gS  SDSS g standard (filter+CCD +1.3 air mass)  
+# A0-AB offset:      0.100 0 =Rest Frame
+# lambda_eff=   4.6862E+03
+# 14 = rS  SDSS r standard (filter+CCD +1.3 air mass)  
+# A0-AB offset:     -0.138 0 =Rest Frame
+# lambda_eff=   6.1658E+03
+# 15 = iS  SDSS i standard (filter+CCD +1.3 air mass)  
+# A0-AB offset:     -0.355 0 =Rest Frame
+# lambda_eff=   7.4812E+03
+# 16 = zS  SDSS z standard (filter+CCD +1.3 air mass)  
+# A0-AB offset:     -0.512 0 =Rest Frame
+# lambda_eff=   8.9317E+03
+# 17 = uz  SDSS u z=0.1 shifted (filter+CCD +1.3 air m 
+# A0-AB offset:     -1.239 0 =Rest Frame
+# lambda_eff=   3.2285E+03
+# 18 = gz  SDSS g z=0.1 shifted (filter+CCD +1.3 air m 
+# A0-AB offset:      0.019 0 =Rest Frame
+# lambda_eff=   4.2601E+03
+# 19 = rz  SDSS r z=0.1 shifted (filter+CCD +1.3 air m 
+# A0-AB offset:     -0.025 0 =Rest Frame
+# lambda_eff=   5.6053E+03
+# 20 = iz  SDSS i z=0.1 shifted (filter+CCD +1.3 air m 
+# A0-AB offset:     -0.255 0 =Rest Frame
+# lambda_eff=   6.8011E+03
+# 21 = zz  SDSS z z=0.1 shifted (filter+CCD +1.3 air m 
+# A0-AB offset:     -0.443 0 =Rest Frame
+# lambda_eff=   8.1198E+03
+# 22 = V  RGO CCD V                                    
+# A0-AB offset:      0.008 2 =Weighted Age
+# lambda_eff=   5.4038E+03
+# 23 = V  RGO CCD V                                    
+# A0-AB offset:      0.008 3 =Weighted Metallicity 
+# lambda_eff=   5.4038E+03
+# 24 = BL  Bolometric luminosity                       
+# A0-AB offset:      0.000 0 =Rest Frame
+# lambda_eff=  -9.9900E+02
+# 25 = LC  Lyman continuum photons                     
+# A0-AB offset:      0.000 0 =Rest Frame
+# lambda_eff=  -9.9900E+02
+# 26 = SM  Stellar mass                                
+# A0-AB offset:      0.000 0 =Rest Frame
+# lambda_eff=  -9.9900E+02
+# 27 = SM  Stellar mass                                
+# A0-AB offset:      0.000 2 =Weighted Age
+# lambda_eff=  -9.9900E+02
+# 28 = B0  200-290 A  top hat                          
+# A0-AB offset:    -45.626 0 =Rest Frame
+# lambda_eff=   2.3944E+02
+# 29 = B1  290-420 A  top hat                          
+# A0-AB offset:    -44.417 0 =Rest Frame
+# lambda_eff=   3.4700E+02
+# 30 = B2  420-620 A  top hat                          
+# A0-AB offset:    -37.730 0 =Rest Frame
+# lambda_eff=   5.0707E+02
+# 31 = B3  620-900 A  top hat                          
+# A0-AB offset:    -23.461 0 =Rest Frame
+# lambda_eff=   7.4268E+02
+# 32 = B4  900-1200 A  top hat                         
+# A0-AB offset:    -11.286 0 =Rest Frame
+# lambda_eff=   1.0356E+03
+# 33 = B5  1200-1600 A  top hat                        
+# A0-AB offset:     -2.973 0 =Rest Frame
+# lambda_eff=   1.3809E+03
+# 34 = B6  1600-2100 A  top hat                        
+# A0-AB offset:     -2.005 0 =Rest Frame
+# lambda_eff=   1.8274E+03
+# 35 = B7  2100-2800 A  top hat                        
+# A0-AB offset:     -1.814 0 =Rest Frame
+# lambda_eff=   2.4165E+03
+# 36 = B8  2800-3800 A  top hat                        
+# A0-AB offset:     -1.203 0 =Rest Frame
+# lambda_eff=   3.2492E+03
+# 37 = B9  3800-5700 A  top hat                        
+# A0-AB offset:      0.072 0 =Rest Frame
+# lambda_eff=   4.6223E+03
+# 38 = C0  5700-8600 A  top hat                        
+# A0-AB offset:     -0.260 0 =Rest Frame
+# lambda_eff=   6.9523E+03
+# 39 = C1  8600-13000 A  top hat                       
+# A0-AB offset:     -0.654 0 =Rest Frame
+# lambda_eff=   1.0499E+04
+# 40 = C2  13000-20000 A  top hat                      
+# A0-AB offset:     -1.299 0 =Rest Frame
+# lambda_eff=   1.6000E+04
+# 41 = C3  20000-40000 A  top hat                      
+# A0-AB offset:     -2.208 0 =Rest Frame
+# lambda_eff=   2.7726E+04
+# 42 = C4  40000-80000 A  top hat                      
+# A0-AB offset:     -3.535 0 =Rest Frame
+# lambda_eff=   5.5452E+04
+# 43 = iA  ACS F775W (i) (filter+CCD) (Sirianni prelim 
+# A0-AB offset:     -0.382 1 =Observers Frame
+# lambda_eff=   7.6575E+03
+# 44 = zA  ACS F850LP (z) (filter+CCD) (Sirianni preli 
+# A0-AB offset:     -0.517 1 =Observers Frame
+# lambda_eff=   9.1172E+03
+# 45 = SL SIRTF 3.6um filter                           
+# A0-AB offset:     -2.745 1 =Observers Frame
+# lambda_eff=   3.5351E+04
+# 46 = SM SIRTF 4.5um filter                           
+# A0-AB offset:     -3.202 1 =Observers Frame
+# lambda_eff=   4.4736E+04
+# 47 = S5 SIRTF 5.8um filter                           
+# A0-AB offset:     -3.658 1 =Observers Frame
+# lambda_eff=   5.6312E+04
+# 48 = S8 SIRTF 8.0um filter                           
+# A0-AB offset:     -4.300 1 =Observers Frame
+# lambda_eff=   7.7826E+04
+
+nband =   48
+
+bandname = [ \ 
+UA  1500A (1350-1650A) top-hat filter, \ 
+UC  COMBO-17 2800A (2600-3000A) top-hat filter, \ 
+U RGO U, \ 
+B  RGO CCD B, \ 
+V  RGO CCD V, \ 
+R  RGO CCD R(Kron-Cousins), \ 
+I  RGO CCD I(Kron-Cousins), \ 
+J  UKIRT  J filter, \ 
+H  UKIRT H filter, \ 
+K  UKIRT K filter, \ 
+BJ Couch and Newell (80) BJ (photographic) fi, \ 
+uS  SDSS u standard (filter+CCD +1.3 air mass), \ 
+gS  SDSS g standard (filter+CCD +1.3 air mass), \ 
+rS  SDSS r standard (filter+CCD +1.3 air mass), \ 
+iS  SDSS i standard (filter+CCD +1.3 air mass), \ 
+zS  SDSS z standard (filter+CCD +1.3 air mass), \ 
+uz  SDSS u z=0.1 shifted (filter+CCD +1.3 air m, \ 
+gz  SDSS g z=0.1 shifted (filter+CCD +1.3 air m, \ 
+rz  SDSS r z=0.1 shifted (filter+CCD +1.3 air m, \ 
+iz  SDSS i z=0.1 shifted (filter+CCD +1.3 air m, \ 
+zz  SDSS z z=0.1 shifted (filter+CCD +1.3 air m, \ 
+V  RGO CCD V, \ 
+V  RGO CCD V, \ 
+BL  Bolometric luminosity, \ 
+LC  Lyman continuum photons, \ 
+SM  Stellar mass, \ 
+SM  Stellar mass, \ 
+B0  200-290 A  top hat, \ 
+B1  290-420 A  top hat, \ 
+B2  420-620 A  top hat, \ 
+B3  620-900 A  top hat, \ 
+B4  900-1200 A  top hat, \ 
+B5  1200-1600 A  top hat, \ 
+B6  1600-2100 A  top hat, \ 
+B7  2100-2800 A  top hat, \ 
+B8  2800-3800 A  top hat, \ 
+B9  3800-5700 A  top hat, \ 
+C0  5700-8600 A  top hat, \ 
+C1  8600-13000 A  top hat, \ 
+C2  13000-20000 A  top hat, \ 
+C3  20000-40000 A  top hat, \ 
+C4  40000-80000 A  top hat, \ 
+iA  ACS F775W (i) (filter+CCD) (Sirianni prelim, \ 
+zA  ACS F850LP (z) (filter+CCD) (Sirianni preli, \ 
+SL SIRTF 3.6um filter, \ 
+SM SIRTF 4.5um filter, \ 
+S5 SIRTF 5.8um filter, \ 
+S8 SIRTF 8.0um filter  ]
+
+bandid     = [          UA,           UC,           U ,           B ,           V ,           R ,           I ,           J ,           H ,           K ,           BJ,           uS,           gS,           rS,           iS,           zS,           uz,           gz,           rz,           iz,           zz,           V ,           V ,           BL,           LC,           SM,           SM,           B0,           B1,           B2,           B3,           B4,           B5,           B6,           B7,           B8,           B9,           C0,           C1,           C2,           C3,           C4,           iA,           zA,           SL,           SM,           S5,           S8]
+iselect    = [           0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            2,            3,            0,            0,            0,            2,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            0,            1,            1,            1,            1,            1,            1]
+a0_ab      = [ -0.2500E+01,  -0.1546E+01,  -0.9031E+00,   0.1166E+00,   0.7931E-02,  -0.2259E+00,  -0.4300E+00,  -0.8847E+00,  -0.1386E+01,  -0.1870E+01,   0.8878E-01,  -0.9105E+00,   0.1001E+00,  -0.1376E+00,  -0.3549E+00,  -0.5117E+00,  -0.1239E+01,   0.1946E-01,  -0.2457E-01,  -0.2546E+00,  -0.4426E+00,   0.7931E-02,   0.7931E-02,   0.0000E+00,   0.0000E+00,   0.0000E+00,   0.0000E+00,  -0.4563E+02,  -0.4442E+02,  -0.3773E+02,  -0.2346E+02,  -0.1129E+02,  -0.2973E+01,  -0.2005E+01,  -0.1814E+01,  -0.1203E+01,   0.7200E-01,  -0.2599E+00,  -0.6535E+00,  -0.1299E+01,  -0.2208E+01,  -0.3535E+01,  -0.3816E+00,  -0.5169E+00,  -0.2745E+01,  -0.3202E+01,  -0.3658E+01,  -0.4300E+01]
+lambda_eff = [  0.1490E+04,   0.2790E+04,   0.3507E+04,   0.4369E+04,   0.5404E+04,   0.6656E+04,   0.8102E+04,   0.1230E+05,   0.1653E+05,   0.2197E+05,   0.4482E+04,   0.3551E+04,   0.4686E+04,   0.6166E+04,   0.7481E+04,   0.8932E+04,   0.3228E+04,   0.4260E+04,   0.5605E+04,   0.6801E+04,   0.8120E+04,   0.5404E+04,   0.5404E+04,  -0.9990E+03,  -0.9990E+03,  -0.9990E+03,  -0.9990E+03,   0.2394E+03,   0.3470E+03,   0.5071E+03,   0.7427E+03,   0.1036E+04,   0.1381E+04,   0.1827E+04,   0.2417E+04,   0.3249E+04,   0.4622E+04,   0.6952E+04,   0.1050E+05,   0.1600E+05,   0.2773E+05,   0.5545E+05,   0.7658E+04,   0.9117E+04,   0.3535E+05,   0.4474E+05,   0.5631E+05,   0.7783E+05]
+#
+# Emission lines calculated:
+#
+# Lyalpha              lambda=   0.1216E+04    -0.8000E+02     0.1000E+03     0.8000E+02     0.1000E+03
+# Halpha               lambda=   0.6563E+04    -0.8000E+02     0.1000E+03     0.8000E+02     0.1000E+03
+# Hbeta                lambda=   0.4862E+04    -0.8000E+02     0.1000E+03     0.8000E+02     0.1000E+03
+# OII3727              lambda=   0.3727E+04    -0.8000E+02     0.1000E+03     0.8000E+02     0.1000E+03
+#
+emlines = T
+nline =  4
+        linename = [       Lyalpha,         Halpha,          Hbeta,        OII3727]
+     lambda_line = [    0.1216E+04,     0.6563E+04,     0.4862E+04,     0.3727E+04]
+    lam_off_ctm1 = [   -0.8000E+02,    -0.8000E+02,    -0.8000E+02,    -0.8000E+02]
+  lam_width_ctm1 = [    0.1000E+03,     0.1000E+03,     0.1000E+03,     0.1000E+03]
+    lam_off_ctm2 = [    0.8000E+02,     0.8000E+02,     0.8000E+02,     0.8000E+02]
+  lam_width_ctm2 = [    0.1000E+03,     0.1000E+03,     0.1000E+03,     0.1000E+03]
+
+#
+# No molecular emission lines were calculated in this model
+#
+emlines = F
+nmolline   = 0

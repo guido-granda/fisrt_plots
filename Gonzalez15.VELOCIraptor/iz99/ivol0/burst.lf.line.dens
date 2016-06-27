@@ -1,0 +1,9 @@
+# NLINE=    4
+# ONGOING BURSTS
+# dustfile= Data/dust/dust_MW_hz1.0.dat    emdustfile= 0 rfacburst=  1.0000E+00 fcloud=  2.5000E-01 tesc_disk=  1.0000E-03 tesc_burst=  1.0000E-03
+# lambda_break[disk/burst]=   1.0000E+04   1.0000E+02 beta2[disk/burst]=   2.0000E+00   1.6000E+00
+# dust emission wavelengths :  0.240000E+02 0.240000E+02 0.600000E+02 0.600000E+02 0.100000E+03 0.100000E+03 0.160000E+03 0.160000E+03 0.250000E+03 0.250000E+03 0.350000E+03 0.350000E+03 0.500000E+03 0.500000E+03 0.850000E+03 0.850000E+03 0.870000E+03 0.870000E+03
+#
+# (L_line/V)/(10^40 h erg/s/Mpc^3): (without/with dust)
+#          Lyalpha                 Halpha                  Hbeta                   OII3727             
+  7.9210E+00  5.1263E-01  1.0044E+00  1.6906E-01  3.3872E-01  4.6109E-02  6.0315E-01  7.7807E-02
