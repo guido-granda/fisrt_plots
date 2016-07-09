@@ -33,8 +33,12 @@ box_size= 210.0 # Mpc/h
 
 
 for i in range(0,len(redshifts)):
-        mcold_t=np.empty(1)
-        title=r'Mcold histogram Mini-Surfs-Velociraptor, '+redshifts[i]
+        mcold_atom_t=np.empty(1)
+        mcold_mol_t  =np.empty(1)
+        vdisk_t=np.empty(1)
+        vhalo_t=np.empty(1)
+        
+        title=r'Mcold histogram Mini-Surfs-Velociraptor for $M_{mol}>10^{7}$, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
             fileformat = 'png'
@@ -51,45 +55,77 @@ for i in range(0,len(redshifts)):
                # vdisk=np.array(data.get('vdisk'))
                # vhalo=np.array(data.get('vhalo'))
                 mcold_atom=np.array(data.get('mcold_atom'))
+                mcold_mol =np.array(data.get('mcold_mol'))
+                vdisk=np.array(data.get('vdisk'))
+	        vhalo=np.array(data.get('vhalo')) 
      #volume 144703.125
     # Checking Vdisk data and Vhalo data
      #   n_data1=vdisk.shape[0]# they are both the same number
      #   n_data2=vhalo.shape[0]# check above
-                mcold_t=np.append(mcold_t,mcold_atom)
+                mcold_atom_t=np.append(mcold_atom_t,mcold_atom)
+                mcold_mol_t =np.append(mcold_mol_t,mcold_mol)
+                vhalo_t=np.append(vhalo_t,vhalo)
+                vdisk_t=np.append(vdisk_t,vdisk)
             direc='./Gonzalez15.VELOCIraptor/'
         
-        mcold_t=mcold_t[1:]
-        mcold_min=np.amin(mcold_t)
-        mcold_max=np.amax(mcold_t)
-        print(u'The mcold goes from %3.5f to %3.5f' %(mcold_min,mcold_max))
+        mcold_atom_t=mcold_atom_t[1:]
+        mcold_mol_t =mcold_mol_t[1:]
+        vhalo_t     =vhalo_t[1:]
+        vdisk_t     =vdisk_t[1:]
+       # ranges
+        mcold_atom_min=np.amin(mcold_atom_t)
+        mcold_atom_max=np.amax(mcold_atom_t)
+        mcold_mol_min=np.amin(mcold_mol_t)
+        mcold_mol_max=np.amax(mcold_mol_t)
+        vhalo_t_min=np.amin(vhalo_t)
+        vhalo_t_max=np.amax(vhalo_t)
+        vdisk_t_min=np.amin(vdisk_t)
+        vdisk_t_max=np.amax(vdisk_t)
+        
+        print(u'The atomic mcold goes from %3.5f to %3.5f' %(mcold_atom_min,mcold_atom_max))
+        print(u'The molecular mcold goes from %3.5f to %3.5f' %(mcold_mol_min,mcold_mol_max))
+        print(u'The vhalo goes from %3.5f to %3.5f' %(vhalo_t_min,vhalo_t_max))
+        print(u'The vdisk goes from %3.5f to %3.5f' %(vdisk_t_min,vdisk_t_max))
  # finding range of values
-        n_data1=np.shape(mcold_t)[0]
+        n_data1=np.shape(mcold_mol_t)[0]
 
 	n_histogram=int(round(np.sqrt(n_data1)))#/4.0
-	left=np.log10(mcold_min+1.0)
-	right=np.log10(mcold_max)
-
-	dist_bin   =(right-left)/(n_histogram+1)
-	l_edge     =left-dist_bin/2.0
-	r_edge     =right+dist_bin/2.0
-	bin_edges  =np.arange(l_edge,r_edge+dist_bin,dist_bin)
-	bin_centers=bin_edges+dist_bin
-	bin_centers=bin_centers[1:]
-        binwidths  =np.diff(10**bin_edges)
+	left=vdisk_t_min
+	right=vdisk_t_max
+        idx=(mcold_mol_t>1.0e7)#M_Sol/h
+        
+        dist_bin   =(right-left)/(n_histogram+1)
+        l_edge     =left-dist_bin/2.0
+        r_edge     =right+dist_bin/2.0
+        bin_edges  =np.arange(l_edge,r_edge+dist_bin,dist_bin)
+        bin_centers=bin_edges+dist_bin
+        bin_centers=bin_centers[1:]
+        binwidths  =np.diff(bin_edges)
 	################# histogram Vdisk############################3
-	hist1, bin_edges1= np.histogram(np.log10(mcold_t+1.0), bin_edges)
-	idx1=(hist1 >0)
+        hist1, bin_edges1= np.histogram(vdisk_t[idx], bin_edges)
+        hist2, bin_edges2= np.histogram(vdisk_t, bin_edges)
+	idx1=(hist1>0) 
+        idx2=(hist2>0)
+
+        #idx2=(hist1[idx] >0) 
 	# over the volume
-	hist1=hist1/volume_tree
+        hist1=hist1/volume_tree
+        hist2=hist2/volume_tree
+
 	#error1=np.sqrt(hist1)/volume_tree
 	# correct for log(vmax)
-	hist1=np.log10(hist1[idx1]/np.diff(np.log(bin_edges)))
-        p1_1 = axs.plot(bin_centers[idx1],hist1, label='Mcold', marker='.', linestyle='-', markersize=4, c='k')		  
-        #handles, labels = axs.get_legend_handles_labels()
-        #axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
+        hist1=hist1/np.diff(bin_edges)
+        hist2=hist2/np.diff(bin_edges)
+
+        axs.plot(bin_centers[idx1],hist1[idx1], label=r'$Mcold molecular >10^{7} $', marker='.', linestyle='-', markersize=4, c='r')		  
+        axs.plot(bin_centers[idx2],hist2[idx2], label=r'Mcold molecular all ', marker='.', linestyle='-', markersize=4, c='k')
+        handles, labels = axs.get_legend_handles_labels()
+        axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
         #axs.set_ylim(1E-1,1E1)
-        axs.set_xlabel(r'$log(M_{cold}[M_\odot/h])$)')
-        axs.set_ylabel(r'$log(dn/dln M_{cold}/h^{3}Mpc^{-3}$')
+        axs.set_xscale('log')
+        axs.set_yscale('log')
+        axs.set_xlabel(r'$V_{disk}[Km/s]$)')
+        axs.set_ylabel(r'$dn/d V_{disk} [h^{3}Mpc^{-3}]$')
         axs.set_title(title)
         plt.savefig(title+'.png',dpi=dpi,format=fileformat)
         
