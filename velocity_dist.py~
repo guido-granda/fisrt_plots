@@ -142,7 +142,7 @@ for i in range(0,len(redshifts)):
      axs2.axhline(y=0.5,xmin=0,xmax=1,color='k',linestyle='--')
      axs1.set_ylabel(r'$dn/dV_{disk,halo} [h^3 Mpc^{-3}sKm^{-1}]$')
      axs1.set_title(title)
-     fig.savefig(title+'.png',dpi=dpi,format=fileformat)
+     fig.savefig(titlei+'.png',dpi=dpi,format=fileformat)
      direc='./Gonzalez15.VELOCIraptor/'
 	# botton plot 
 

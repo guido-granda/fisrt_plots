@@ -125,7 +125,7 @@ for i in range(0,len(redshifts)):
         axs.set_xscale('log')
         axs.set_yscale('log')
         axs.set_xlabel(r'$V_{disk}[Km/s]$)')
-        axs.set_ylabel(r'$dn/d V_{disk} [h^{3}Mpc^{-3}skm^{-1}]$')
+        axs.set_ylabel(r'$dn/d V_{disk} [h^{3}Mpc^{-3}]$')
         axs.set_title(title)
         plt.savefig(title+'.png',dpi=dpi,format=fileformat)
         

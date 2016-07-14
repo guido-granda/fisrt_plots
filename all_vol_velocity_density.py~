@@ -14,7 +14,6 @@ matplotlib.use('Agg')
 #redshift list
 redshifts=['iz200','iz174','iz156','iz142','iz131','iz113','iz99','iz78']
 ivols=['ivol0','ivol10']
-nvols = np.shape(ivols)[0]
 direc='./Gonzalez15.VELOCIraptor/'
 
 # set font properties
@@ -32,7 +31,7 @@ plt.rcParams.update(params)
 
 
 #some parameters
-volume_tree=144703.125*Nvols #(Mpc/h)^3
+volume_tree=144703.125 #(Mpc/h)^3
 box_size= 210.0 # Mpc/h    
 
 

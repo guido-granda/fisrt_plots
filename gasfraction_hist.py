@@ -8,7 +8,10 @@ matplotlib.use('Agg')
 
 #redshift list
 redshifts=['iz200','iz174','iz156','iz142','iz131','iz113','iz99','iz78']
+#volume list
 ivols=['ivol0','ivol10']
+nvols=len(ivols)
+#directory name 
 direc='./Gonzalez15.VELOCIraptor/'
 
 # set font properties
@@ -33,8 +36,15 @@ box_size= 210.0 # Mpc/h
 
 
 for i in range(0,len(redshifts)):
-        mcold_atom_t=np.empty(1)
-        mcold_mol_t  =np.empty(1)
+       # mcold_atom_t=np.empty(1)
+       # mcold_mol_t  =np.empty(1)
+        mcold_atom_bulge_t=np.empty(1)
+        mcold_mol_bulge_t =np.empty(1)
+        mstars_bulge_t    =np.empty(1)
+        mstars_disk_t     =np.empty(1)
+        mchalo_t          =np.empty(1)
+        mhalo_t           =np.empty(1)
+        mhhalo_t          =np.empty(1)
         vdisk_t=np.empty(1)
         vhalo_t=np.empty(1)
         
@@ -54,36 +64,53 @@ for i in range(0,len(redshifts)):
                 times =hf.get("Output_Times")
                # vdisk=np.array(data.get('vdisk'))
                # vhalo=np.array(data.get('vhalo'))
-                mcold_atom=np.array(data.get('mcold_atom'))
-                mcold_mol =np.array(data.get('mcold_mol'))
+                mcold_atom_bulge=np.array(data.get('mcold_atom_bulge'))
+                mcold_mol_bulge =np.array(data.get('mcold_mol_bulge'))
+                mstars_bulge    =np.array(data.get('mstars_bulge'))
+                mstars_disk     =np.array(data.get('mstars_disk'))
+                mchalo          =np.array(data.get('mchalo'))
+                mhalo           =np.array(data.get('mhalo'))
+                mhhalo          =np.array(data.get('mhhalo'))
                 vdisk=np.array(data.get('vdisk'))
 	        vhalo=np.array(data.get('vhalo')) 
      #volume 144703.125
     # Checking Vdisk data and Vhalo data
      #   n_data1=vdisk.shape[0]# they are both the same number
      #   n_data2=vhalo.shape[0]# check above
-                mcold_atom_t=np.append(mcold_atom_t,mcold_atom)
-                mcold_mol_t =np.append(mcold_mol_t,mcold_mol)
+                mcold_atom_bulge_t=np.append(mcold_atom_bulge_t,mcold_atom_bulge)
+                mcold_mol_bulge_t =np.append(mcold_mol_bulge_t,mcold_mol_bulge)
+                mstars_bulge_t    =np.append(mstars_bulge_t,mstars_bulge)
+                mstars_disk_t     =np.append(mstars_disk_t,mstars_disk)
+                mchalo_t          =np.append(mchalo_t,mchalo)
+                mhalo_t           =np.append(mhalo_t,mhalo)
+                mhhalo_t          =np.append(mhhalo_t,mhhalo)
                 vhalo_t=np.append(vhalo_t,vhalo)
                 vdisk_t=np.append(vdisk_t,vdisk)
             direc='./Gonzalez15.VELOCIraptor/'
         
-        mcold_atom_t=mcold_atom_t[1:]
-        mcold_mol_t =mcold_mol_t[1:]
-        vhalo_t     =vhalo_t[1:]
-        vdisk_t     =vdisk_t[1:]
+        mcold_atom_bulge_t=mcold_atom_bulge_t[1:]
+        mcold_mol_bulge_t =mcold_mol_bulge_t[1:]
+        mstars_bulge_t    =mstars_bulge_t[1:]
+        mstars_disk_t     =mstars_disk_t[1:]
+        mchalo_t          =mchalo_t[1:]
+        mhalo_t           =mhalo_t[1:]
+        mhhalo_t          =mhhalo_t[1:]
+        vhalo_t           =vhalo_t[1:]
+        vdisk_t           =vdisk_t[1:]
+        mbulge_t=mcold_atom_bulge_t+mcold_mol_bulge_t+mstars_bulge_t
+        mtotal  =mbulge_t+mstars_disk_t+mchalo_t+mhalo_t+mhhalo_t
        # ranges
-        mcold_atom_min=np.amin(mcold_atom_t)
-        mcold_atom_max=np.amax(mcold_atom_t)
-        mcold_mol_min=np.amin(mcold_mol_t)
-        mcold_mol_max=np.amax(mcold_mol_t)
+       # mcold_atom_min=np.amin(mcold_atom_t)
+       # mcold_atom_max=np.amax(mcold_atom_t)
+      #  mcold_mol_min=np.amin(mcold_mol_t)
+      #  mcold_mol_max=np.amax(mcold_mol_t)
         vhalo_t_min=np.amin(vhalo_t)
         vhalo_t_max=np.amax(vhalo_t)
         vdisk_t_min=np.amin(vdisk_t)
         vdisk_t_max=np.amax(vdisk_t)
         
-        print(u'The atomic mcold goes from %3.5f to %3.5f' %(mcold_atom_min,mcold_atom_max))
-        print(u'The molecular mcold goes from %3.5f to %3.5f' %(mcold_mol_min,mcold_mol_max))
+        #print(u'The atomic mcold goes from %3.5f to %3.5f' %(mcold_atom_min,mcold_atom_max))
+        #print(u'The molecular mcold goes from %3.5f to %3.5f' %(mcold_mol_min,mcold_mol_max))
         print(u'The vhalo goes from %3.5f to %3.5f' %(vhalo_t_min,vhalo_t_max))
         print(u'The vdisk goes from %3.5f to %3.5f' %(vdisk_t_min,vdisk_t_max))
  # finding range of values
@@ -109,8 +136,8 @@ for i in range(0,len(redshifts)):
 
         #idx2=(hist1[idx] >0) 
 	# over the volume
-        hist1=hist1/volume_tree
-        hist2=hist2/volume_tree
+        hist1=hist1/(volume_tree*nvol)
+        hist2=hist2/(volume_tree*nvol)
 
 	#error1=np.sqrt(hist1)/volume_tree
 	# correct for log(vmax)
