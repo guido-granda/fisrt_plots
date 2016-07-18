@@ -36,19 +36,29 @@ box_size= 210.0 # Mpc/h
 
 
 for i in range(0,len(redshifts)):
-       # mcold_atom_t=np.empty(1)
-       # mcold_mol_t  =np.empty(1)
+        #Setting collecting arrays
+        mcold_t		  =np.empty(1)
+        mcold_atom_t      =np.empty(1)
         mcold_atom_bulge_t=np.empty(1)
-        mcold_mol_bulge_t =np.empty(1)
+        mcold_burst_t     =np.empty(1)
+        mcold_cooling_t   =np.empty(1)
+        mcold_major_t     =np.empty(1)
+        mcold_minor_t     =np.empty(1)
+        mcold_mol_t       =np.empty(1)
         mstars_bulge_t    =np.empty(1)
-        mstars_disk_t     =np.empty(1)
-        mchalo_t          =np.empty(1)
+        mcold_mol_bulge_t =np.empty(1)
+        mcold_recycle_t   =np.empty(1)
         mhalo_t           =np.empty(1)
         mhhalo_t          =np.empty(1)
-        vdisk_t=np.empty(1)
-        vhalo_t=np.empty(1)
+        mhot_t            =np.empty(1)
+        mstars_allburst_t =np.empty(1)
+        mstars_bulge_t    =np.empty(1)
+        mstars_burst_t    =np.empty(1)
+        mstars_disk_t     =np.empty(1)
+        vdisk_t           =np.empty(1)
+        vhalo_t           =np.empty(1)
         
-        title=r'Mcold histogram Mini-Surfs-Velociraptor for $M_{mol}>10^{7}$, '+redshifts[i]
+        title=r'Mcold histogram Mini-Surfs-Velociraptor for gas fraction>0.5 $, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
             fileformat = 'png'
@@ -58,68 +68,105 @@ for i in range(0,len(redshifts)):
             ##Reading the data from hdf5 file ####
             with h5py.File(direc,'r') as hf:
                 data = hf.get('Output001')
-               #  np_data = np.array(data)
-               #  print('Shape of the array Output001: \n', np_data.shape)
-               #  print('List of items of the output: \n',data.items())
                 times =hf.get("Output_Times")
-               # vdisk=np.array(data.get('vdisk'))
-               # vhalo=np.array(data.get('vhalo'))
-                mcold_atom_bulge=np.array(data.get('mcold_atom_bulge'))
-                mcold_mol_bulge =np.array(data.get('mcold_mol_bulge'))
-                mstars_bulge    =np.array(data.get('mstars_bulge'))
-                mstars_disk     =np.array(data.get('mstars_disk'))
-                mchalo          =np.array(data.get('mchalo'))
-                mhalo           =np.array(data.get('mhalo'))
-                mhhalo          =np.array(data.get('mhhalo'))
+                mcold           =np.array(data.get('mcold')) # Mass of cold gas in the disk of the galaxy             
+                mcold_atom      =np.array(data.get('mcold_atom')) #Mass of H gas mass in the disk of the galaxy
+                mcold_atom_bulge=np.array(data.get('mcold_atom_bulge'))# Mass of H gas in the bulge of the galaxy
+                mcold_burst     =np.array(data.get('mcold_burst'))#Mass of cold gas remaining in ongoing bursts (Msolar/h)
+                mcold_cooling   =np.array(data.get('mcold_cooling'))#Cold gas Mass in the galaxy that comes from cooling
+                mcold_major     =np.array(data.get('mcold_major'))#Cold gas Mass in the galaxy that comes from major mergers (Msolar/h)
+                mcold_minor     =np.array(data.get('mcold_minor'))# Cold gas Mass in the galaxy that comes from minor mergers (Msolar/h).
+                mcold_mol       =np.array(data.get('mcold_mol'))#Mass of molecularhydrogen gas mass in the disk of the galaxy (Msolar/h)
+                mstars_bulge    =np.array(data.get('mstars_bulge'))#Mass of stars in the bulge (Msolar/h)
+                mcold_mol_bulge =np.array(data.get('mcold_mol_bulge'))#Mass of molecular hydrogen gas mass in the bulge of the galaxy (Msolar/h)
+                mcold_recycle   =np.array(data.get('mcold_recycle'))# Cold gas Mass in the galaxy that comes from recycling of old stars (Msolar/h).
+                mhalo           =np.array(data.get('mhalo'))#Mass of the halo in which the galaxy formed
+                mhhalo          =np.array(data.get('mhhalo'))#Mass of the host halo at this output time (Msolar/h)
+                mhot            =np.array(data.get('mhot'))#Mass of hot gas in the halo (Msolar/h)
+                mstars_allburst =np.array(data.get('mstars_allburst'))#Stellar mass in all bursts (Msolar/h)
+                mstars_bulge    =np.array(data.get('mstars_bulge'))#Mass of stars in the bulge (Msolar/h)
+                mstars_burst    =np.array(data.get('mstars_burst'))#Stellar mass in ongoing bursts (Msolar/h)
+                mstars_disk     =np.array(data.get('mstars_disk'))#Mass of stars in the disk (Msolar/h)
                 vdisk=np.array(data.get('vdisk'))
 	        vhalo=np.array(data.get('vhalo')) 
-     #volume 144703.125
-    # Checking Vdisk data and Vhalo data
-     #   n_data1=vdisk.shape[0]# they are both the same number
-     #   n_data2=vhalo.shape[0]# check above
+
+                # collecting the data of all the volumes
+                mcold_t           =np.append(mcold_t,mcold)
+                mcold_atom_t      =np.append(mcold_atom_t,mcold_atom_t)
                 mcold_atom_bulge_t=np.append(mcold_atom_bulge_t,mcold_atom_bulge)
-                mcold_mol_bulge_t =np.append(mcold_mol_bulge_t,mcold_mol_bulge)
+                mcold_burst_t     =np.append(mcold_burst_t,mcold_burst)
+                mcold_cooling_t   =np.append(mcold_cooling_t,mcold_cooling)
+                mcold_major_t     =np.append(mcold_major_t,mcold_major)
+                mcold_minor_t     =np.append(mcold_minor_t,mcold_minor)
+                mcold_mol_t       =np.append(mcold_mol_t,mcold_mol)
                 mstars_bulge_t    =np.append(mstars_bulge_t,mstars_bulge)
-                mstars_disk_t     =np.append(mstars_disk_t,mstars_disk)
-                mchalo_t          =np.append(mchalo_t,mchalo)
+                mcold_mol_bulge_t =np.append(mcold_mol_bulge_t,mcold_mol_bulge)
+                mcold_recycle_t   =np.append(mcold_recycle_t,mcold_recycle_t)
                 mhalo_t           =np.append(mhalo_t,mhalo)
                 mhhalo_t          =np.append(mhhalo_t,mhhalo)
-                vhalo_t=np.append(vhalo_t,vhalo)
-                vdisk_t=np.append(vdisk_t,vdisk)
+                mhot_t            =np.append(mhot_t,mhot)
+                mstars_allburst_t =np.append(mstars_allburst_t,mstars_allburst)
+                mstars_bulge_t    =np.append(mstars_bulge_t,mstars_bulge)
+                mstars_burst_t    =np.append(mstars_burst_t,mstars_burst)
+                mstars_disk_t     =np.append(mstars_disk_t,mstars_disk)
+                vdisk_t           =np.append(vdisk_t,vdisk)
+	        vhalo_t           =np.append(vhalo_t,vhalo) 
             direc='./Gonzalez15.VELOCIraptor/'
+
+
+
+
+        total_mcold   =(mcold_t+mcold_atom_bulge+mcold_cooling+mcold_major+mcold_minor+mcold_mol_bulge+mcold_recycle)[1:]
+        total_mass    =total_mcold+mhot[1:]
+        fraction      =total_mcold/total_mass
         
-        mcold_atom_bulge_t=mcold_atom_bulge_t[1:]
-        mcold_mol_bulge_t =mcold_mol_bulge_t[1:]
-        mstars_bulge_t    =mstars_bulge_t[1:]
-        mstars_disk_t     =mstars_disk_t[1:]
-        mchalo_t          =mchalo_t[1:]
-        mhalo_t           =mhalo_t[1:]
-        mhhalo_t          =mhhalo_t[1:]
+
+#        mcold_t           =
+#        mcold_atom_t      =
+#        mcold_atom_bulge_t=
+#        mcold_burst_t     =
+#        mcold_cooling_t   =
+#        mcold_major_t     =
+#        mcold_minor_t     =
+#        mcold_mol_t       =
+#        mstars_bulge_t    =
+#        mcold_mol_bulge_t =
+#        mcold_recycle_t   =
+#        mhalo_t           =
+#        mhhalo_t          =
+#        mhot_t            =
+#        mstars_allburst_t =
+#        mstars_bulge_t    =
+#        mstars_burst_t    =
+#        mstars_disk_t     =
+#        vdisk_t           =
+#        vhalo_t           =
+#        mcold_atom_bulge_t=mcold_atom_bulge_t[1:]
+#        mcold_mol_bulge_t =mcold_mol_bulge_t[1:]
+#        mstars_bulge_t    =mstars_bulge_t[1:]
+#        mstars_disk_t     =mstars_disk_t[1:]
+#        mchalo_t          =mchalo_t[1:]
+#        mhalo_t           =mhalo_t[1:]
+#        mhhalo_t          =mhhalo_t[1:]
         vhalo_t           =vhalo_t[1:]
         vdisk_t           =vdisk_t[1:]
-        mbulge_t=mcold_atom_bulge_t+mcold_mol_bulge_t+mstars_bulge_t
-        mtotal  =mbulge_t+mstars_disk_t+mchalo_t+mhalo_t+mhhalo_t
+#        mbulge_t=mcold_atom_bulge_t+mcold_mol_bulge_t+mstars_bulge_t
+#        mtotal  =mbulge_t+mstars_disk_t+mchalo_t+mhalo_t+mhhalo_t
        # ranges
-       # mcold_atom_min=np.amin(mcold_atom_t)
-       # mcold_atom_max=np.amax(mcold_atom_t)
-      #  mcold_mol_min=np.amin(mcold_mol_t)
-      #  mcold_mol_max=np.amax(mcold_mol_t)
         vhalo_t_min=np.amin(vhalo_t)
         vhalo_t_max=np.amax(vhalo_t)
         vdisk_t_min=np.amin(vdisk_t)
         vdisk_t_max=np.amax(vdisk_t)
         
-        #print(u'The atomic mcold goes from %3.5f to %3.5f' %(mcold_atom_min,mcold_atom_max))
-        #print(u'The molecular mcold goes from %3.5f to %3.5f' %(mcold_mol_min,mcold_mol_max))
         print(u'The vhalo goes from %3.5f to %3.5f' %(vhalo_t_min,vhalo_t_max))
-        print(u'The vdisk goes from %3.5f to %3.5f' %(vdisk_t_min,vdisk_t_max))
+        print(u'The vdisk goes from %3.5f to %3.5f \n' %(vdisk_t_min,vdisk_t_max))
  # finding range of values
         n_data1=np.shape(mcold_mol_t)[0]
 
 	n_histogram=int(round(np.sqrt(n_data1)))#/4.0
 	left=vdisk_t_min
 	right=vdisk_t_max
-        idx=(mcold_mol_t>1.0e7)#M_Sol/h
+        idx=(fraction>0.5)#M_Sol/h
         
         dist_bin   =(right-left)/(n_histogram+1)
         l_edge     =left-dist_bin/2.0
