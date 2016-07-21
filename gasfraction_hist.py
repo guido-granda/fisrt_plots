@@ -31,7 +31,8 @@ plt.rcParams.update(params)
 #some parameters
 volume_tree=144703.125 #(Mpc/h)^3
 box_size= 210.0 # Mpc/h    
-
+dm_mass = 5.97e9 # Msun/h
+halo_mass_min=100*dm_mass
 
 
 
@@ -45,20 +46,19 @@ for i in range(0,len(redshifts)):
         mcold_major_t     =np.empty(1)
         mcold_minor_t     =np.empty(1)
         mcold_mol_t       =np.empty(1)
-        mstars_bulge_t    =np.empty(1)
         mcold_mol_bulge_t =np.empty(1)
         mcold_recycle_t   =np.empty(1)
         mhalo_t           =np.empty(1)
         mhhalo_t          =np.empty(1)
         mhot_t            =np.empty(1)
         mstars_allburst_t =np.empty(1)
-        mstars_bulge_t    =np.empty(1)
         mstars_burst_t    =np.empty(1)
         mstars_disk_t     =np.empty(1)
+        mstars_bulge_t    =np.empty(1)
         vdisk_t           =np.empty(1)
         vhalo_t           =np.empty(1)
         
-        title=r'Mcold histogram Mini-Surfs-Velociraptor for gas fraction>0.5 $, '+redshifts[i]
+        title=r'Mcold histogram Mini-SURF-Velociraptor for $f_{bulge}>0.5$, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
             fileformat = 'png'
@@ -84,7 +84,6 @@ for i in range(0,len(redshifts)):
                 mhhalo          =np.array(data.get('mhhalo'))#Mass of the host halo at this output time (Msolar/h)
                 mhot            =np.array(data.get('mhot'))#Mass of hot gas in the halo (Msolar/h)
                 mstars_allburst =np.array(data.get('mstars_allburst'))#Stellar mass in all bursts (Msolar/h)
-                mstars_bulge    =np.array(data.get('mstars_bulge'))#Mass of stars in the bulge (Msolar/h)
                 mstars_burst    =np.array(data.get('mstars_burst'))#Stellar mass in ongoing bursts (Msolar/h)
                 mstars_disk     =np.array(data.get('mstars_disk'))#Mass of stars in the disk (Msolar/h)
                 vdisk=np.array(data.get('vdisk'))
@@ -99,7 +98,6 @@ for i in range(0,len(redshifts)):
                 mcold_major_t     =np.append(mcold_major_t,mcold_major)
                 mcold_minor_t     =np.append(mcold_minor_t,mcold_minor)
                 mcold_mol_t       =np.append(mcold_mol_t,mcold_mol)
-                mstars_bulge_t    =np.append(mstars_bulge_t,mstars_bulge)
                 mcold_mol_bulge_t =np.append(mcold_mol_bulge_t,mcold_mol_bulge)
                 mcold_recycle_t   =np.append(mcold_recycle_t,mcold_recycle_t)
                 mhalo_t           =np.append(mhalo_t,mhalo)
@@ -115,10 +113,16 @@ for i in range(0,len(redshifts)):
 
 
 
+        mstars_bulge_t=mstars_bulge_t[1:]
+        mstars_disk_t =mstars_disk_t[1:]
+        mstars_total  =mstars_bulge_t+mstars_disk_t
+        id0=(mstars_total>0)
+        fbulge=mstars_bulge_t[id0]/mstars_total[id0]
 
-        total_mcold   =(mcold_t+mcold_atom_bulge+mcold_cooling+mcold_major+mcold_minor+mcold_mol_bulge+mcold_recycle)[1:]
-        total_mass    =total_mcold+mhot[1:]
-        fraction      =total_mcold/total_mass
+
+#        total_mcold   =(mcold_t+mcold_atom_bulge+mcold_cooling+mcold_major+mcold_minor+mcold_mol_bulge+mcold_recycle)[1:]
+#        total_mass    =total_mcold+mhot[1:]
+#        fraction      =total_mcold/total_mass
         
 
 #        mcold_t           =
@@ -161,12 +165,12 @@ for i in range(0,len(redshifts)):
         print(u'The vhalo goes from %3.5f to %3.5f' %(vhalo_t_min,vhalo_t_max))
         print(u'The vdisk goes from %3.5f to %3.5f \n' %(vdisk_t_min,vdisk_t_max))
  # finding range of values
-        n_data1=np.shape(mcold_mol_t)[0]
+        n_data1=np.shape(vdisk_t)[0]
 
 	n_histogram=int(round(np.sqrt(n_data1)))#/4.0
 	left=vdisk_t_min
 	right=vdisk_t_max
-        idx=(fraction>0.5)#M_Sol/h
+        idx=(fbulge>=0.5)
         
         dist_bin   =(right-left)/(n_histogram+1)
         l_edge     =left-dist_bin/2.0
@@ -183,16 +187,16 @@ for i in range(0,len(redshifts)):
 
         #idx2=(hist1[idx] >0) 
 	# over the volume
-        hist1=hist1/(volume_tree*nvol)
-        hist2=hist2/(volume_tree*nvol)
+        hist1=hist1/(volume_tree*nvols)
+        hist2=hist2/(volume_tree*nvols)
 
 	#error1=np.sqrt(hist1)/volume_tree
 	# correct for log(vmax)
         hist1=hist1/np.diff(bin_edges)
         hist2=hist2/np.diff(bin_edges)
 
-        axs.plot(bin_centers[idx1],hist1[idx1], label=r'$Mcold molecular >10^{7} $', marker='.', linestyle='-', markersize=4, c='r')		  
-        axs.plot(bin_centers[idx2],hist2[idx2], label=r'Mcold molecular all ', marker='.', linestyle='-', markersize=4, c='k')
+        axs.plot(bin_centers[idx1],hist1[idx1], label=r'$f_{bulge}>0.5 $', marker='.', linestyle='-', markersize=4, c='r')		  
+        axs.plot(bin_centers[idx2],hist2[idx2], label=r'all ', marker='.', linestyle='-', markersize=4, c='k')
         handles, labels = axs.get_legend_handles_labels()
         axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
         #axs.set_ylim(1E-1,1E1)
