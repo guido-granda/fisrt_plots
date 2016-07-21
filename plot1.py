@@ -33,8 +33,11 @@ box_size= 210.0 # Mpc/h
 
 
 for i in range(0,len(redshifts)):
-        vdisk_total=np.empty(1)
-        vhalo_total=np.empty(1)
+        vdisk_t=np.empty(1)
+        vhalo_t=np.empty(1)
+        mstars_bulge_t=np.empty(1)
+        mstars_disk_t=np.empty(1)
+
         title=r'Vdisk vs Vhalo Mini-Surfs-Velociraptor, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
@@ -44,24 +47,38 @@ for i in range(0,len(redshifts)):
             direc=direc+redshifts[i]+'/'+ivols[j]+'/galaxies.hdf5'
             ##Reading the data from hdf5 file ####
             with h5py.File(direc,'r') as hf:
-                data = hf.get('Output001')
-               #  np_data = np.array(data)
-               #  print('Shape of the array Output001: \n', np_data.shape)
-               #  print('List of items of the output: \n',data.items())
-                times =hf.get("Output_Times")
-                vdisk=np.array(data.get('vdisk'))
-                vhalo=np.array(data.get('vhalo'))
+                data         = hf.get('Output001')
+                times        =hf.get("Output_Times")
+                vdisk        =np.array(data.get('vdisk'))
+                vhalo        =np.array(data.get('vhalo'))
+                mstars_disk  =np.array(data.get('mstars_disk'))
+                mstars_bulge =np.array(data.get('mstars_bulge'))
+                
 
-     #volume 144703.125
-    # Checking Vdisk data and Vhalo data
-     #   n_data1=vdisk.shape[0]# they are both the same number
-     #   n_data2=vhalo.shape[0]# check above
-                vdisk_total=np.append(vdisk_total,vdisk)
-                vhalo_total=np.append(vhalo_total,vhalo)
+
+                vdisk_t      =np.append(vdisk_t,vdisk)
+                vhalo_t      =np.append(vhalo_t,vhalo)
+                mstars_disk_t=np.append(mstars_disk_t,mstars_disk)
+                mstars_bulge_t=np.append(mstars_bulge_t,mstars_bulge)
             direc='./Gonzalez15.VELOCIraptor/'
+
+
         
-        vdisk_t=vdisk_total[1:]
-        vhalo_t=vhalo_total[1:]
+        vdisk_t       =vdisk_t[1:]
+        vhalo_t       =vhalo_t[1:]
+        mstars_disk_t =mstars_disk_t[1:]
+        mstars_bulge_t=mstars_bulge_t[1:]
+        mstars_total  = mstars_disk_t + mstars_bulge_t
+        id0= (mstars_total>0)
+        fbulge=mstars_bulge_t[id0]/mstars_total[id0]
+        vhalo_t           =vhalo_t[id0]
+        vdisk_t           =vdisk_t[id0]
+       
+
+
+        idx1=(fbulge>=0.5)
+        idx2=(fbulge<0.5)
+
         vdisk_min=np.amin(vdisk_t)
         vdisk_max=np.amax(vdisk_t)
         print(u'The Vdisk goes from %3.5f to %3.5f' %(vdisk_min,vdisk_max))
@@ -74,7 +91,11 @@ for i in range(0,len(redshifts)):
         n_data1=np.shape(vdisk_t)[0]
 
 	     
-        axs.plot(vhalo_t,vdisk_t, 'ro',markersize =2)
+        axs.plot(vhalo_t[idx1],vdisk_t[idx1],'or',label=r"$f_bulge\geq 0.5$",markersize =2)
+        axs.plot(vhalo_t[idx2],vdisk_t[idx2],'ob',label=r"$f_bulge< 0.5$",markersize =2)
+        handles, labels = axs.get_legend_handles_labels()
+        axs.legend(handles, labels, numpoints=1, loc='upper right') 
+
         #handles, labels = axs.get_legend_handles_labels()
         #axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
         #axs.set_ylim(1E-1,1E1)
