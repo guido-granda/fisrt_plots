@@ -7,7 +7,7 @@ matplotlib.use('Agg')
 
 
 #redshift list
-redshifts=['iz200','iz174','iz156','iz142','iz131','iz113','iz99','iz78']
+redshifts=['iz200']#,'iz174','iz156','iz142','iz131','iz113','iz99','iz78']
 #volume list
 ivols=['ivol0','ivol10']
 nvols=len(ivols)
@@ -32,7 +32,7 @@ plt.rcParams.update(params)
 volume_tree=144703.125 #(Mpc/h)^3
 box_size= 210.0 # Mpc/h    
 dm_mass = 5.97e9 # Msun/h
-halo_mass_min=100*dm_mass # halo mass treshold
+halo_mass_min=100*dm_mass
 
 
 
@@ -58,7 +58,7 @@ for i in range(0,len(redshifts)):
         vdisk_t           =np.empty(1)
         vhalo_t           =np.empty(1)
         
-        title=r'Mcold histogram Mini-SURF-Velociraptor for $f_{bulge} > 0.5 $, '+redshifts[i]
+        title=r'Mcold histogram Mini-SURF-Velociraptor for $f_{bulge}>0.5$, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
             fileformat = 'png'
@@ -154,9 +154,7 @@ for i in range(0,len(redshifts)):
 #        mhalo_t           =mhalo_t[1:]
 #        mhhalo_t          =mhhalo_t[1:]
         vhalo_t           =vhalo_t[1:]
-        vhalo_t           =vhalo_t[id0]
         vdisk_t           =vdisk_t[1:]
-        vdisk_t           =vdisk_t[id0]
 #        mbulge_t=mcold_atom_bulge_t+mcold_mol_bulge_t+mstars_bulge_t
 #        mtotal  =mbulge_t+mstars_disk_t+mchalo_t+mhalo_t+mhhalo_t
        # ranges
