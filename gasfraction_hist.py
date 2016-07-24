@@ -187,7 +187,7 @@ for i in range(0,len(redshifts)):
         hist2, bin_edges2= np.histogram(vdisk_t, bin_edges)
 	idx1=(hist1>0) 
         idx2=(hist2>0)
-
+        idx3= idx1 & idx2
         #idx2=(hist1[idx] >0) 
 	# over the volume
         hist1=hist1/(volume_tree*nvols)
@@ -198,8 +198,8 @@ for i in range(0,len(redshifts)):
         hist1=hist1/np.diff(bin_edges)
         hist2=hist2/np.diff(bin_edges)
 
-        axs.plot(bin_centers[idx1],hist1[idx1], label=r'$f_{bulge}>0.5 $', marker='.', linestyle='-', markersize=4, c='r')		  
-        axs.plot(bin_centers[idx2],hist2[idx2], label=r'all ', marker='.', linestyle='-', markersize=4, c='k')
+        axs.plot(bin_centers[idx3],hist1[idx3], label=r'$f_{bulge}>0.5 $', marker='.', linestyle='-', markersize=4, c='r')		  
+        axs.plot(bin_centers[idx3],hist2[idx3], label=r'all ', marker='.', linestyle='-', markersize=4, c='k')
         handles, labels = axs.get_legend_handles_labels()
         axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
         #axs.set_ylim(1E-1,1E1)
