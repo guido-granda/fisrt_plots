@@ -1,26 +1,23 @@
 
-# coding: utf-8
-
-# In[30]:
-
 from __future__ import print_function
 import numpy as np
 import h5py
-import matplotlib.pyplot as plt
+import matplotlib
 import matplotlib
 matplotlib.use('Agg')
-
+import matplotlib.pyplot as plt
 
 #redshift list
 redshifts=['iz200','iz174','iz156','iz142','iz131','iz113','iz99','iz78']
 ivols=['ivol0','ivol10']
+nvols = np.shape(ivols)[0]
 direc='./Gonzalez15.VELOCIraptor/'
 
 # set font properties
 params = {      'axes.labelsize': 14,
                         'axes.labelweight': 'normal',
                         'axes.titlesize':  16, # Plot Title size
-                        'text.fontsize':   14,
+                        'font.size':   14,
                         'legend.fontsize': 14,
                         'xtick.labelsize': 14, # Ticklabels
                         'ytick.labelsize': 14,
@@ -31,7 +28,7 @@ plt.rcParams.update(params)
 
 
 #some parameters
-volume_tree=144703.125 #(Mpc/h)^3
+volume_tree=144703.125*nvols #(Mpc/h)^3
 box_size= 210.0 # Mpc/h    
 
 
