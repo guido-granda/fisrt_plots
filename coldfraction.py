@@ -5,7 +5,6 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-
 #redshift list
 redshifts=['iz200','iz174','iz156','iz142','iz131','iz113','iz99','iz78']
 #volume list
@@ -58,7 +57,7 @@ for i in range(0,len(redshifts)):
         vdisk_t           =np.empty(1)
         vhalo_t           =np.empty(1)
         
-        title=r'Histogram Mini-SURF-Velociraptor for $f_{bulge} > 0.5 $, '+redshifts[i]
+        title=r'Histogram Mini-SURF-Velociraptor for $f_{cold} > 0.5 $, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
             fileformat = 'png'
@@ -91,7 +90,7 @@ for i in range(0,len(redshifts)):
 
                 # collecting the data of all the volumes
                 mcold_t           =np.append(mcold_t,mcold)
-                mcold_atom_t      =np.append(mcold_atom_t,mcold_atom_t)
+                mcold_atom_t      =np.append(mcold_atom_t,mcold_atom)
                 mcold_atom_bulge_t=np.append(mcold_atom_bulge_t,mcold_atom_bulge)
                 mcold_burst_t     =np.append(mcold_burst_t,mcold_burst)
                 mcold_cooling_t   =np.append(mcold_cooling_t,mcold_cooling)
@@ -114,11 +113,23 @@ for i in range(0,len(redshifts)):
 
 
 
-        mstars_bulge_t=mstars_bulge_t[1:]
-        mstars_disk_t =mstars_disk_t[1:]
-        mstars_total  =mstars_bulge_t+mstars_disk_t
-        id0=(mstars_total>0)
-        fbulge=mstars_bulge_t[id0]/mstars_total[id0]
+        mcold_t           =mcold_t[1:]
+        mcold_atom_t      =mcold_atom_t[1:]
+        mcold_atom_bulge_t=mcold_atom_bulge_t[1:]
+        mcold_burst_t     =mcold_burst_t[1:]
+        mcold_cooling_t   =mcold_cooling_t[1:]
+        mcold_major_t     =mcold_major_t[1:]
+        mcold_minor_t     =mcold_minor_t[1:]
+        mstars_disk_t     =mstars_disk_t[1:]
+        mstars_bulge_t    =mstars_bulge_t[1:]
+        mstars_total      =mstars_bulge_t+mstars_disk_t
+        mcold_total       =mcold_t+mcold_atom_t+mcold_atom_bulge_t+mcold_burst_t+mcold_cooling_t+mcold_major_t+mcold_minor_t
+        mtotal            =mstars_total+mcold_total
+
+
+
+        id0=(mtotal>0)
+        fcold=mcold_total[id0]/mtotal[id0]
 
 
 #        total_mcold   =(mcold_t+mcold_atom_bulge+mcold_cooling+mcold_major+mcold_minor+mcold_mol_bulge+mcold_recycle)[1:]
@@ -173,7 +184,7 @@ for i in range(0,len(redshifts)):
 	n_histogram=int(round(np.sqrt(n_data1)))#/4.0
 	left=vdisk_t_min
 	right=vdisk_t_max
-        idx=(fbulge>=0.5)
+        idx=(fcold>=0.5)
         
         dist_bin   =(right-left)/(n_histogram+1)
         l_edge     =left-dist_bin/2.0
@@ -198,7 +209,7 @@ for i in range(0,len(redshifts)):
         hist1=hist1/np.diff(bin_edges)
         hist2=hist2/np.diff(bin_edges)
 
-        axs.plot(bin_centers[idx3],hist1[idx3], label=r'$f_{bulge}>0.5 $', marker='.', linestyle='-', markersize=4, c='r')		  
+        axs.plot(bin_centers[idx3],hist1[idx3], label=r'$f_{cold}>0.5 $', marker='.', linestyle='-', markersize=4, c='r')		  
         axs.plot(bin_centers[idx3],hist2[idx3], label=r'all ', marker='.', linestyle='-', markersize=4, c='k')
         handles, labels = axs.get_legend_handles_labels()
         axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})

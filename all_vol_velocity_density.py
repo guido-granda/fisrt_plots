@@ -40,7 +40,7 @@ for i in range(0,len(redshifts)):
         title=r'Mini-Surfs-Velociraptor, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
-            fileformat = 'png'
+            fileformat = 'pdf'
             dpi = 300
             fig = plt.figure()
 
@@ -138,5 +138,5 @@ for i in range(0,len(redshifts)):
         axs2.axhline(y=0.5,xmin=0,xmax=1,color='k',linestyle='--')
         axs1.set_ylabel(r'$dn/dV_{disk,halo} [h^3 Mpc^{-3}s{Km}^{-1}]$')
         axs1.set_title(title)
-        fig.savefig(title+'.png',dpi=dpi,format=fileformat)
+        fig.savefig(title+'.pdf',dpi=dpi,format=fileformat)
         
