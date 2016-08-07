@@ -1,10 +1,9 @@
 from __future__ import print_function
 import numpy as np
 import h5py
-import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
-
+import matplotlib.pyplot as plt
 
 #redshift list
 redshifts=['iz200','iz174','iz156','iz142','iz131','iz113','iz99','iz78']
@@ -117,18 +116,30 @@ for i in range(0,len(redshifts)):
         mcold_cooling_t   =mcold_cooling_t[1:]
         mcold_major_t     =mcold_major_t[1:]
         mcold_minor_t     =mcold_minor_t[1:]
-        mstars_disk_t     =mstars_disk_t[1:]
-        mstars_bulge_t    =mstars_bulge_t[1:]
+        mcold_mol_bulge_t = mcold_mol_bulge_t[1:]      
+        mcold_recycle_t   = mcold_recycle_t[1:]  
+        mhalo_t           = mhalo_t[1:]          
+        mhhalo_t          = mhhalo_t[1:]         
+        mhot_t            = mhot_t[1:]           
+        mstars_allburst_t = mstars_allburst_t[1:]
+        mstars_bulge_t    = mstars_bulge_t[1:]   
+        mstars_burst_t    = mstars_burst_t[1:]   
+        mstars_disk_t     = mstars_disk_t[1:]    
+        vdisk_t           = vdisk_t[1:]          
+        vhalo_t           = vhalo_t[1:]          
+
+
+        mdisk_total       = mcold_t + mstars_disk_t
+        mbulge_total      = mstars_bulge_t + mcold_burst_t
+        mtotal            = mdisk_total+mbulge_total
+       
+
+        mcold_total       = mcold_t + mcold_burst_t
         mstars_total      =mstars_bulge_t+mstars_disk_t
-        mcold_total       =mcold_t+mcold_atom_t+mcold_atom_bulge_t+mcold_burst_t+mcold_cooling_t+mcold_major_t+mcold_minor_t
-        mtotal            =mstars_total+mcold_total 
+        
         id0=(mtotal>0)
         fcold=mcold_total[id0]/mtotal[id0]
 
-        vhalo_t           =vhalo_t[1:]
-        vhalo_t           =vhalo_t[id0]
-        vdisk_t           =vdisk_t[1:]
-        vdisk_t           =vdisk_t[id0]
        # ranges
         vhalo_t_min=np.amin(vhalo_t)
         vhalo_t_max=np.amax(vhalo_t)
@@ -136,8 +147,12 @@ for i in range(0,len(redshifts)):
         vdisk_t_max=np.amax(vdisk_t)
 
 
-        idx1=(fcold>=0.5)
-        idx2=(fcold<0.5)
+        idx1=(fcold>0.5)
+        idx2=(0.4<fcold) & (fcold<0.5)
+        idx3=(0.3<fcold) & (fcold<0.4)
+        idx4=(0.2<fcold) & (fcold<0.3)
+        idx5=(0.1<fcold) & (fcold<0.2)
+        idx6=(0.0<fcold) & (fcold<0.1)
 
         vdisk_min=np.amin(vdisk_t)
         vdisk_max=np.amax(vdisk_t)
@@ -151,8 +166,12 @@ for i in range(0,len(redshifts)):
         n_data1=np.shape(vdisk_t)[0]
 
 	     
-        axs.plot(vhalo_t[idx1],vdisk_t[idx1],'or',label=r"$f_{cold}\geq 0.5$",markersize =2)
-        axs.plot(vhalo_t[idx2],vdisk_t[idx2],'ob',label=r"$f_{cold}< 0.5$",markersize =2)
+        axs.plot(vhalo_t[idx1],vdisk_t[idx1],'or',label=r"$f_{cold}\geq 0.5$",markersize =3)
+        axs.plot(vhalo_t[idx2],vdisk_t[idx2],'ob',label=r"$0.4<f_{cold}< 0.5$",markersize =3)
+        axs.plot(vhalo_t[idx3],vdisk_t[idx3],'og',label=r"$0.3<f_{cold}< 0.4$",markersize =3)
+        axs.plot(vhalo_t[idx4],vdisk_t[idx4],'ok',label=r"$0.2<f_{cold}< 0.3$",markersize =3)
+        axs.plot(vhalo_t[idx5],vdisk_t[idx5],'oy',label=r"$0.1<f_{cold}< 0.2$",markersize =3)
+        axs.plot(vhalo_t[idx6],vdisk_t[idx6],'om',label=r"$0.0<f_{cold}< 0.1$",markersize =3)
         handles, labels = axs.get_legend_handles_labels()
         axs.legend(handles, labels, numpoints=1, loc='upper right') 
 
