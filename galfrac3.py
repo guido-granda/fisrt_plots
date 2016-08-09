@@ -58,7 +58,7 @@ for i in range(0,len(redshifts)):
         for j in range(0,len(ivols)):
         # set figure
             fileformat = 'png'
-            dpi = 300
+            dpi = 400
             fig,axs = plt.subplots()
             direc=direc+redshifts[i]+'/'+ivols[j]+'/galaxies.hdf5'
             ##Reading the data from hdf5 file ####
@@ -133,11 +133,13 @@ for i in range(0,len(redshifts)):
         id0=(mtotal>0)
         #fcold=mcold_total[id0]/mtotal[id0]
         fcold=mcold_total/mtotal
-
-       # vhalo_t           =vhalo_t[1:]
+        
+        vhalo_t           =vhalo_t[1:]
        # vhalo_t           =vhalo_t[id0]
-       # vdisk_t           =vdisk_t[1:]
+        vdisk_t           =vdisk_t[1:]
        # vdisk_t           =vdisk_t[id0]
+        id1= (vdisk_t >= 500) & id0       
+
        # ranges
        # vhalo_t_min=np.amin(vhalo_t)
        # vhalo_t_max=np.amax(vhalo_t)
@@ -160,11 +162,12 @@ for i in range(0,len(redshifts)):
        # n_data1=np.shape(vdisk_t)[0]
 
 	     
-        axs.plot(mstars_total[id0],fcold[id0],'og',label=r'$f_{cold}$', markersize=2)
+        axs.plot(mstars_total[id0],fcold[id0],'og', markersize=4)
+        axs.plot(mstars_total[id1],fcold[id1],'^r',label=r'$f_{cold} (Vdisk \geq 500 km/s )$', markersize=6)
        #r"$f_{cold}\geq 0.5$",markersize =2)
        # axs.plot(vhalo_t[idx2],vdisk_t[idx2],'ob',label=r"$f_{cold}< 0.5$",markersize =2)
         handles, labels = axs.get_legend_handles_labels()
-        axs.legend(handles, labels, numpoints=1, loc='upper left') 
+        axs.legend(handles, labels, numpoints=1, loc='lower left') 
 
         #handles, labels = axs.get_legend_handles_labels()
         #axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
