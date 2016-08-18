@@ -84,28 +84,26 @@ for i in range(0,len(redshifts)):
         bin_centers=bin_centers[1:]
         binwidths  =np.diff(bin_edges)
 	################# histogram Vdisk############################
-        hist1, bin_edges1= np.histogram(vdisk_t[idb1], bin_edges)
-        hist2, bin_edges2= np.histogram(vdisk_t, bin_edges)
+        hist1, bin_edges1= np.histogram(rdisk_t[idb1], bin_edges)
+        hist2, bin_edges2= np.histogram(rdisk_t, bin_edges)
 
 	#############################################################
-        idx1=(hist1>0) 
-        idx2=(hist2>0)
-        idxh= idx1 & idx2
+        #idx1=(hist1>0) 
+        #idx2=(hist2>0)
+        #idxh= idx1 & idx2
 	# over the volume
         #  hist1=hist1/(volume_tree*nvols)
 	# correct for dv 
         # hist1=hist1/np.diff(bin_edges)
         # plots
         #axs.set_xrange([1.0e1,1.0e3])
-        axs.plot(bin_centers[idxh],hist1[idxh], label=r'$V_{disk} >  500 (km/s) $', marker='.', linestyle='-', markersize=4, c='r')
-	axs.plot(bin_centers[idxh],hist2[idxh], label=r'total', marker='.', linestyle='-', markersize=4, c='b')
+        axs.plot(bin_centers,hist1,label=r'$V_{disk} >  500 (km/s) $', marker='.', linestyle='-', markersize=4, c='r')
+	axs.plot(bin_centers,hist2,label=r'total', marker='.', linestyle='-', markersize=4, c='b')
 	  
         handles, labels = axs.get_legend_handles_labels()
-        axs.legend(handles, labels, numpoints=1, loc='upper left') #, prop={'size': 'x-small'})
-        #axs.set_ylim(1E-1,1E1)
-        #axs.set_xscale('log')
-        #axs.set_yscale('log')
+        axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
+        axs.set_ylim([-1.0,1.2*np.amax(hist2)])
         axs.set_xlabel(r'$r_{disk}[Mpc/h]$)')
         axs.set_ylabel(r'$N$')
         axs.set_title(title)
-        plt.savefig(title+'.pdf',dpi=dpi,format='pdf')
+        plt.savefig(title+'.png',dpi=dpi,format='png')
