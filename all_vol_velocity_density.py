@@ -1,15 +1,11 @@
 
-# coding: utf-8
-
-# In[30]:
-
 from __future__ import print_function
 import numpy as np
 import h5py
-import matplotlib.pyplot as plt
+import matplotlib
 import matplotlib
 matplotlib.use('Agg')
-
+import matplotlib.pyplot as plt
 
 #redshift list
 redshifts=['iz200','iz174','iz156','iz142','iz131','iz113','iz99','iz78']
@@ -21,7 +17,7 @@ direc='./Gonzalez15.VELOCIraptor/'
 params = {      'axes.labelsize': 14,
                         'axes.labelweight': 'normal',
                         'axes.titlesize':  16, # Plot Title size
-                        'text.fontsize':   14,
+                        'font.size':   14,
                         'legend.fontsize': 14,
                         'xtick.labelsize': 14, # Ticklabels
                         'ytick.labelsize': 14,
@@ -32,7 +28,7 @@ plt.rcParams.update(params)
 
 
 #some parameters
-volume_tree=144703.125*Nvols #(Mpc/h)^3
+volume_tree=144703.125*nvols #(Mpc/h)^3
 box_size= 210.0 # Mpc/h    
 
 
@@ -44,7 +40,7 @@ for i in range(0,len(redshifts)):
         title=r'Mini-Surfs-Velociraptor, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
-            fileformat = 'png'
+            fileformat = 'pdf'
             dpi = 300
             fig = plt.figure()
 
@@ -63,17 +59,11 @@ for i in range(0,len(redshifts)):
         ##Reading the data from hdf5 file ####
             with h5py.File(direc,'r') as hf:
                 data = hf.get('Output001')
-         #  np_data = np.array(data)
-         #  print('Shape of the array Output001: \n', np_data.shape)
-         #  print('List of items of the output: \n',data.items())
+
                 times =hf.get("Output_Times")
                 vdisk=np.array(data.get('vdisk'))
                 vhalo=np.array(data.get('vhalo'))
 
-     #volume 144703.125
-    # Checking Vdisk data and Vhalo data
-     #   n_data1=vdisk.shape[0]# they are both the same number
-     #   n_data2=vhalo.shape[0]# check above
                 vdisk_total=np.append(vdisk_total,vdisk)
                 vhalo_total=np.append(vhalo_total,vhalo)
             direc='./Gonzalez15.VELOCIraptor/'
@@ -148,5 +138,5 @@ for i in range(0,len(redshifts)):
         axs2.axhline(y=0.5,xmin=0,xmax=1,color='k',linestyle='--')
         axs1.set_ylabel(r'$dn/dV_{disk,halo} [h^3 Mpc^{-3}s{Km}^{-1}]$')
         axs1.set_title(title)
-        fig.savefig(title+'.png',dpi=dpi,format=fileformat)
+        fig.savefig(title+'.pdf',dpi=dpi,format=fileformat)
         

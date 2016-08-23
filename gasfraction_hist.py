@@ -1,9 +1,9 @@
 from __future__ import print_function
 import numpy as np
 import h5py
-import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 #redshift list
@@ -58,7 +58,7 @@ for i in range(0,len(redshifts)):
         vdisk_t           =np.empty(1)
         vhalo_t           =np.empty(1)
         
-        title=r'Mcold histogram Mini-SURF-Velociraptor for $f_{bulge} > 0.5 $, '+redshifts[i]
+        title=r'Histogram Mini-SURF-Velociraptor for multiple $f_{bulge}$, '+redshifts[i]
         for j in range(0,len(ivols)):
         # set figure
             fileformat = 'png'
@@ -119,40 +119,6 @@ for i in range(0,len(redshifts)):
         mstars_total  =mstars_bulge_t+mstars_disk_t
         id0=(mstars_total>0)
         fbulge=mstars_bulge_t[id0]/mstars_total[id0]
-
-
-#        total_mcold   =(mcold_t+mcold_atom_bulge+mcold_cooling+mcold_major+mcold_minor+mcold_mol_bulge+mcold_recycle)[1:]
-#        total_mass    =total_mcold+mhot[1:]
-#        fraction      =total_mcold/total_mass
-        
-
-#        mcold_t           =
-#        mcold_atom_t      =
-#        mcold_atom_bulge_t=
-#        mcold_burst_t     =
-#        mcold_cooling_t   =
-#        mcold_major_t     =
-#        mcold_minor_t     =
-#        mcold_mol_t       =
-#        mstars_bulge_t    =
-#        mcold_mol_bulge_t =
-#        mcold_recycle_t   =
-#        mhalo_t           =
-#        mhhalo_t          =
-#        mhot_t            =
-#        mstars_allburst_t =
-#        mstars_bulge_t    =
-#        mstars_burst_t    =
-#        mstars_disk_t     =
-#        vdisk_t           =
-#        vhalo_t           =
-#        mcold_atom_bulge_t=mcold_atom_bulge_t[1:]
-#        mcold_mol_bulge_t =mcold_mol_bulge_t[1:]
-#        mstars_bulge_t    =mstars_bulge_t[1:]
-#        mstars_disk_t     =mstars_disk_t[1:]
-#        mchalo_t          =mchalo_t[1:]
-#        mhalo_t           =mhalo_t[1:]
-#        mhhalo_t          =mhhalo_t[1:]
         vhalo_t           =vhalo_t[1:]
         vhalo_t           =vhalo_t[id0]
         vdisk_t           =vdisk_t[1:]
@@ -167,13 +133,19 @@ for i in range(0,len(redshifts)):
         
         print(u'The vhalo goes from %3.5f to %3.5f' %(vhalo_t_min,vhalo_t_max))
         print(u'The vdisk goes from %3.5f to %3.5f \n' %(vdisk_t_min,vdisk_t_max))
- # finding range of values
+        # finding range of values
         n_data1=np.shape(vdisk_t)[0]
 
 	n_histogram=int(round(np.sqrt(n_data1)))#/4.0
 	left=vdisk_t_min
 	right=vdisk_t_max
-        idx=(fbulge>=0.5)
+       # f bulge criteria selction 
+        idb1=(fbulge>0.5)
+        idb2=(0.5>fbulge) & (fbulge>0.4)
+        idb3=(0.4>fbulge) & (fbulge>0.3)
+        idb4=(0.3>fbulge) & (fbulge>0.2)
+        idb5=(0.2>fbulge) & (fbulge>0.1)
+        idb6=(0.1>fbulge) & (fbulge>0.0)
         
         dist_bin   =(right-left)/(n_histogram+1)
         l_edge     =left-dist_bin/2.0
@@ -183,31 +155,56 @@ for i in range(0,len(redshifts)):
         bin_centers=bin_centers[1:]
         binwidths  =np.diff(bin_edges)
 	################# histogram Vdisk############################3
-        hist1, bin_edges1= np.histogram(vdisk_t[idx], bin_edges)
-        hist2, bin_edges2= np.histogram(vdisk_t, bin_edges)
-	idx1=(hist1>0) 
+        hist1, bin_edges1= np.histogram(vdisk_t[idb1], bin_edges)
+        hist2, bin_edges2= np.histogram(vdisk_t[idb2], bin_edges)
+        hist3, bin_edges3= np.histogram(vdisk_t[idb3], bin_edges)
+        hist4, bin_edges4= np.histogram(vdisk_t[idb4], bin_edges)
+        hist5, bin_edges5= np.histogram(vdisk_t[idb5], bin_edges)
+        hist6, bin_edges6= np.histogram(vdisk_t[idb6], bin_edges)
+        hist7, bin_edges7= np.histogram(vdisk_t, bin_edges)
+	#############################################################
+        idx1=(hist1>0) 
         idx2=(hist2>0)
-        idx3= idx1 & idx2
+        idx3=(hist3>0)
+        idx4=(hist4>0)
+        idx5=(hist5>0)
+        idx6=(hist6>0)
+        idx7=(hist7>0)
+        idxh= idx1 & idx2 & idx3 & idx4 & idx5 & idx6 & idx7
         #idx2=(hist1[idx] >0) 
 	# over the volume
         hist1=hist1/(volume_tree*nvols)
         hist2=hist2/(volume_tree*nvols)
-
-	#error1=np.sqrt(hist1)/volume_tree
-	# correct for log(vmax)
+        hist3=hist3/(volume_tree*nvols)
+        hist4=hist4/(volume_tree*nvols)
+        hist5=hist5/(volume_tree*nvols)
+        hist6=hist6/(volume_tree*nvols) 
+        hist7=hist7/(volume_tree*nvols)
+	# correct for dv 
         hist1=hist1/np.diff(bin_edges)
         hist2=hist2/np.diff(bin_edges)
-
-        axs.plot(bin_centers[idx3],hist1[idx3], label=r'$f_{bulge}>0.5 $', marker='.', linestyle='-', markersize=4, c='r')		  
-        axs.plot(bin_centers[idx3],hist2[idx3], label=r'all ', marker='.', linestyle='-', markersize=4, c='k')
+        hist3=hist3/np.diff(bin_edges)
+        hist4=hist4/np.diff(bin_edges)
+        hist5=hist5/np.diff(bin_edges)
+        hist6=hist6/np.diff(bin_edges)
+        hist7=hist7/np.diff(bin_edges)
+        # plots
+        #axs.set_xrange([1.0e1,1.0e3])
+        axs.plot(bin_centers[idxh],hist1[idxh], label=r'$f_{bulge} >  0.5 $', marker='.', linestyle='-', markersize=4, c='r')		  
+        axs.plot(bin_centers[idxh],hist2[idxh], label=r'$0.5>f_{bulge} > 0.4 $', marker='.', linestyle='-', markersize=4, c='b') 
+        axs.plot(bin_centers[idxh],hist3[idxh], label=r'$0.4>f_{bulge} > 0.3 $', marker='.', linestyle='-', markersize=4, c='g')
+        axs.plot(bin_centers[idxh],hist4[idxh], label=r'$0.3>f_{bulge} > 0.2 $', marker='.', linestyle='-', markersize=4, c='c')
+        axs.plot(bin_centers[idxh],hist5[idxh], label=r'$0.2>f_{bulge} > 0.1 $', marker='.', linestyle='-', markersize=4, c='y')
+        axs.plot(bin_centers[idxh],hist6[idxh], label=r'$0.1>f_{bulge} > 0.0 $', marker='.', linestyle='-', markersize=4, c='m')
+        axs.plot(bin_centers[idxh],hist7[idxh], label=r'all ', marker='.', linestyle='-', markersize=4, c='k')
         handles, labels = axs.get_legend_handles_labels()
-        axs.legend(handles, labels, numpoints=1, loc='upper right') #, prop={'size': 'x-small'})
+        axs.legend(handles, labels, numpoints=1, loc='lower left') #, prop={'size': 'x-small'})
         #axs.set_ylim(1E-1,1E1)
         axs.set_xscale('log')
         axs.set_yscale('log')
         axs.set_xlabel(r'$V_{disk}[Km/s]$)')
-        axs.set_ylabel(r'$dn/d V_{disk} [h^{3}Mpc^{-3}skm^{-1}]$')
+        axs.set_ylabel(r'$dn/dV_{disk} [h^{3}Mpc^{-3}skm^{-1}]$')
         axs.set_title(title)
-        plt.savefig(title+'.png',dpi=dpi,format=fileformat)
+        plt.savefig(title+'.pdf',dpi=dpi,format='pdf')
         
 
